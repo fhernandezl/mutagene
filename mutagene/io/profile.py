@@ -2,6 +2,7 @@
 from collections import defaultdict
 from mutagene.dna import nucleotides
 from mutagene.dna import complementary_trinucleotide, complementary_nucleotide
+import matplotlib.pyplot as plt
 
 import os
 import numpy as np
@@ -223,3 +224,36 @@ def profile_to_dict(counts_profile):
         mutation_prob[tri][y] = freqs[i]
         mutation_prob[complementary_trinucleotide[tri]][complementary_nucleotide[y]] = freqs[i]
     return mutation_prob
+
+def plot_profile(profile, save=None, show=True):
+    """
+    Plot mutational profile
+
+    Arguments:
+    `profile`: 1x96 array.
+    `save`: saves the figure if a name for the file is provided.
+    `show`: displays the figure if True.
+    """
+    assert len(profile)==96, f"{len(profile)} channels found. Channels in profile must be 96"
+
+    profile = list(profile)
+    seg = [profile[i::6] for i in range(6)]
+    ordered = sum(seg, [])
+
+    colours = []
+    for c in ['#1f77b4','#ff7f0e','#2ca02c','#d62728','#9467bd','#8c564b']:
+        for i in range(16):
+            colours.append(c)
+
+    ticks = []
+    for mut in ['C>A','C>G','C>T','T>A','T>C','T>G']:
+        for left in nucleotides:
+            for right in nucleotides:
+                ticks.append(f"{left}[{mut}]{right}")
+
+    plt.bar(ticks, ordered, color=colours)
+    plt.xticks(rotation=90)
+    if save:
+        plt.savefig(save)
+    if show:
+        plt.show()

@@ -13,3 +13,4 @@ statsmodels
 pyvcf
 twobitreader
 tqdm
+matplotlib
