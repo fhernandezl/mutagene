@@ -3,6 +3,8 @@ import numpy as np
 
 # from .io import read_profile
 # from .io import format_profile
+from mutagene.io.mutations_profile import read_auto_profile
+from mutagene.profiles.profile import get_mutational_profile
 from mutagene.signatures.identify import decompose_mutational_profile_counts
 from mutagene.io.profile import read_signatures, plot_profile
 from pprint import pprint
@@ -197,7 +199,22 @@ def benchmark_2combinations(results_fname, signature_names, W):
 
                     print(signature_ids[i], N_mutations, iteration, round(MSE_M, 4), round(MSE_E, 4), round(ll, 4), round(frob, 4), round(frob0, 4), round(js, 4), round(kl, 4))
 
-class SyntheticSample():
+class Sample:
+    def __init__(self, infile, genome):
+        """
+        Arguments:
+        `infile`: path to vcf file
+        `genome`: path to reference genome
+        """
+        self.infile = open(infile)
+        self.genome = genome
+        mutations, self.processing_stats = read_auto_profile(self.infile, fmt='VCF', asm=self.genome)
+        self.v, self.info = get_mutational_profile(mutations, counts=True), None
+
+    def plot_v(self):
+        plot_profile(self.v)
+
+class SyntheticSample:
     def __init__(self, ref_sig, N_mut=1000, complexity=5, noise=10, _gen=True):
         """
         Returns a synthetic sample object.
@@ -278,8 +295,35 @@ class SyntheticSample():
         }
         self.v, self.info = v, info
 
-    def decompose(self, method='MLEZ', debug=False, others_threshold=0):
-        h, summary, results = decompose_mutational_profile_counts(self.v, self.ref_w_labels, method, debug, others_threshold)
+    def plot_v(self):
+        plot_profile(self.v)
+
+class Decompose:
+    def __init__(self, sample, sig_set, method='MLEZ', debug=False, others_threshold=0):
+        """
+        Arguments:
+        `sample`: Sample or SyntheticSample object to decompose.
+        `sig_set`: signature set to use for the decomposition.
+        `method`: solver method.
+        `debug`: run the decomposition in debug mode.
+        `others_threshold`: minimum threshold for acceptable results
+        """
+        assert type(sample) in [Sample, SyntheticSample], "Invalid sample. Must be of type Sample or SyntheticSample"
+        assert sig_set in [5,10,30,49], "Invalid sig_set choice. Must be 5,10,30 or 49"
+
+        self.sample = sample
+        self.sig_set = sig_set
+        self.method = method
+        self.debug = debug
+        self.others_threshold = others_threshold
+        self.W_and_labels = read_signatures(self.sig_set)
+        self._decompose()
+        self.comparison_avail = True if self.sample.info else False
+        if self.comparison_avail:
+            self._compare()
+
+    def _decompose(self):
+        h, summary, results = decompose_mutational_profile_counts(self.sample.v, self.W_and_labels, self.method, self.debug, self.others_threshold)
         res = filter(lambda item: item['mutations'] != '', results)
         res = filter(lambda item: item['mutations']>0, res)
         self.decomposition = sorted(res, key=lambda item: item['score'], reverse=True)
@@ -287,12 +331,14 @@ class SyntheticSample():
             'h': h,
             'summary': summary,
             'results': results}
+    
+    def _compare(self):
         self.comparison = []
         self.total_error = 0
-        for index, sig in enumerate(self.info['sig']['used']):
+        for index, sig in enumerate(self.sample.info['sig']['used']):
             sig_res = list(filter(lambda item: item['name']==sig, self.decomposition))
             found = 'Yes' if sig_res else 'No'
-            real_score = self.info['h'][index]
+            real_score = self.sample.info['h'][index]
             calc_score = sig_res[0]['score'] if sig_res else 0
             diff = abs(real_score - calc_score)
             self.total_error += diff
@@ -303,9 +349,6 @@ class SyntheticSample():
                 'calc_score': calc_score,
                 'error': diff
             })
-    
-    def plot_v(self):
-        plot_profile(self.v)
 
     def print_results(self, decomposition=True, comparison=True, sep='\t'):
         if decomposition:
@@ -313,24 +356,24 @@ class SyntheticSample():
             print('signature','score','mutations',sep=sep)
             for res in self.decomposition:
                 print(res['name'],res['score'],res['mutations'],sep=sep)
-        if comparison:
+        if comparison and self.comparison_avail:
             print("REAL COMPOSITION")
             print('signature','found in decomposition','real score','calc score','error',sep=sep)
             for comp in self.comparison:
                 print(comp['sig'],comp['found'],comp['real_score'],comp['calc_score'],comp['error'],sep=sep)
-        print('TOTAL ERROR',self.total_error,sep='\n')
+            print('TOTAL ERROR',self.total_error,sep='\n')
 
     def export_results(self, fname='results.out', fextra=None):
         pprint({
             'decomposition': self.decomposition,
-            'comparison': self.comparison
+            'comparison': self.comparison if self.comparison_avail else None
         }, stream=open(fname,'w'))
         if fextra:
             pprint({
-                'synthetic_sample': {
-                    'v': self.v,
-                    'info': self.info
+                'sample': {
+                    'v': self.sample.v,
+                    'info': self.sample.info
                 },
                 'decomposition': self._decomp,
-                'comparison': self.comparison
+                'comparison': self.comparison if self.comparison_avail else None
             }, stream=open(fextra,'w'))
