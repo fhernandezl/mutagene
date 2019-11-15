@@ -1,15 +1,19 @@
 correlated_sig = [
     {
         'description': 'UV radiation',
-        'sig': {5: ["4"], 10: ["9"], 30: ["7"], 49: ["SBS7"]}
+        'sig': {5: ["4"], 10: ["9"], 30: ["7"], 49: ["SBS7a", "SBS7b", "SBS7c", "SBS7d"]}
     },
     {
         'description': 'Tobacco',
-        'sig': {5: ["1"], 10: ["4"], 30: ["4"], 49: ["SBS4"]}
+        'sig': {5: [], 10: [], 30: ["4"], 49: ["SBS4"]}
     },
     {
         'description': 'Aflatoxin',
-        'sig': {5: ["1"], 10: ["4"], 30: ["24"], 49: ["SBS24"]}
+        'sig': {5: [], 10: [], 30: ["24"], 49: ["SBS24"]}
+    },
+    {
+        'description': 'Tobacco and Aflatoxin',
+        'sig': {5: ["1"], 10: ["4"], 30: [], 49: []}
     },
     {
         'description': 'AID/APOBEC',
@@ -29,7 +33,7 @@ correlated_sig = [
     },
     {
         'description': 'DNA polymerase epsilon',
-        'sig': {5: [], 10: ["8"], 30: [], 49: ["SBS10"]}
+        'sig': {5: [], 10: ["8"], 30: [], 49: ["SBS10a", "SBS10b"]}
     },
     {
         'description': 'DNA polymerase eta',
@@ -45,7 +49,7 @@ correlated_sig = [
     },
     {
         'description': 'DNA mismatch repair',
-        'sig': {5: [], 10: [], 30: ["15"], 9: ["SBS6","SBS15","SBS21","SBS44"]}
+        'sig': {5: [], 10: [], 30: ["15"], 49: ["SBS6","SBS15","SBS21","SBS44"]}
     },
     {
         'description': 'Tobacco chewing',
