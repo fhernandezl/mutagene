@@ -1,7 +1,8 @@
 import numpy as np
 from mutagene.io.profile import plot_profile, read_signatures
 from mutagene.io.mutations_profile import read_auto_profile
-from mutagene.profiles.profile import get_mutational_profile
+from mutagene.io.context_window import read_MAF_with_context_window
+from mutagene.profiles.profile import get_mutational_profile, get_multisample_mutational_profile
 
 class Profile:
     def __init__(self, profile):
@@ -17,11 +18,32 @@ class Sample(Profile):
         `infile`: path to vcf file
         `genome`: path to reference genome
         """
+        assert infile.endswith(('vcf','VCF')), "File must be VCF, for multisample files like MAF use the `multisample` method"
         self.infile = open(infile)
         self.genome = genome
         mutations, self.processing_stats = read_auto_profile(self.infile, fmt='VCF', asm=self.genome)
         profile = get_mutational_profile(mutations, counts=True)
         super().__init__(profile)
+
+    @staticmethod
+    def multisample(infile, genome):
+        """
+        Arguments:
+        `infile`: path to maf file
+        `genome`: path to reference genome
+        """
+        mutations, mutations_with_context, processing_stats = read_MAF_with_context_window(open(infile), genome, window_size=1)
+        profile = get_multisample_mutational_profile(mutations, counts=True)
+        samples = []
+        for name, profile in profile.items():
+            _cls = Profile(profile)
+            setattr(_cls, 'name', name)
+            setattr(_cls, 'infile', open(infile))
+            setattr(_cls, 'genome', genome)
+            setattr(_cls, 'mutations_with_context', mutations_with_context)
+            setattr(_cls, 'processing_stats', processing_stats)
+            samples.append(_cls)
+        return samples
 
 class SyntheticSample(Profile):
     def __init__(self, ref_sig, N_mut=1000, complexity=5, noise=10, _gen=True):
