@@ -15,13 +15,13 @@ from mutagene.io.decomposition import write_bootstrap_decomposition
 
 
 logger = logging.getLogger(__name__)
+
 genome_error_message = """requires genome name argument -g hg19, hg38, mm10, see http://hgdownload.cse.ucsc.edu/downloads.html for more
                           Use mutagene fetch to download genome assemblies"""
 
 
 class SignatureMenu(object):
     def __init__(self, parser):
-        parser.add_argument('action', choices=['identify', 'new'])
         required_group = parser.add_argument_group('Required arguments')
         required_group.add_argument("--infile", "-i", help="Input file in VCF or MAF format", type=argparse.FileType('r'))
         required_group.add_argument('--genome', "-g", help="Location of genome assembly file in 2bit format", type=str)
@@ -37,9 +37,9 @@ class SignatureMenu(object):
         advanced_group.add_argument('--method', "-m", help="Method defines the function minimized in the optimization procedure", type=str, default='MLEZ', nargs='?')
         advanced_group.add_argument('--no-unexplained-variance', "-U", help="Do not account for unexplained variance (non-context dependent mutational processes and unknown signatures)", action='store_false')
         advanced_group.add_argument('--bootstrap', "-b", help="Use the bootstrap to calculate confidence intervals", action='store_true')
+        self.parser = parser
 
-    @classmethod
-    def identify(cls, args):
+    def identify(self, args):
         if not args.infile:
             logger.warning("Provide input file in VCF or MAF format (-i) and a corresponding genome assembly (-g)")
             return
@@ -62,17 +62,14 @@ class SignatureMenu(object):
 
         if args.input_format == 'MAF':
             mutations, mutations_with_context, processing_stats = read_MAF_with_context_window(args.infile, args.genome, window_size=1)
-            # print(W, signature_names)
             samples_profiles = get_multisample_mutational_profile(mutations, counts=True)
 
             samples_results = {}
             for sample, profile in samples_profiles.items():
-                # print(profile)
                 _, _, results = decompose_mutational_profile_counts(
                     profile,
                     (W, signature_names),
                     method,
-                    debug=False,
                     others_threshold=0.0)
                 samples_results[sample] = results
             write_multisample_decomposition(args.outfile, samples_results, signature_names)
@@ -84,31 +81,20 @@ class SignatureMenu(object):
                     profile,
                     (W, signature_names),
                     method,
-                    debug=False,
                     others_threshold=0.0,
                     enable_dummy=args.no_unexplained_variance)
                 write_decomposition(args.outfile, results, signature_names, 'VCF')
             else:
                 bootstrap_results = []
                 for resampled_profile in generate_resampled_profiles(profile, 100):
-                    # print(resampled_profile)
                     _, _, results = decompose_mutational_profile_counts(
                         resampled_profile,
                         (W, signature_names),
                         method,
-                        debug=False,
                         others_threshold=0.0,
                         enable_dummy=args.no_unexplained_variance)
                     bootstrap_results.append(results)
                 write_bootstrap_decomposition(args.outfile, bootstrap_results, signature_names, 'VCF')
 
-
-    @classmethod
-    def new(cls, args):
-        logger.warning("Method to find new signatures will be added to the package in the next release")
-        return
-
-    @classmethod
-    def callback(cls, args):
-        # print('SignatureMenu', args.action)
-        getattr(cls, args.action)(args)
+    def callback(self, args):
+        self.identify(args)
