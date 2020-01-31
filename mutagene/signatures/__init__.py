@@ -10,7 +10,7 @@ import sys
 class Identify:
     extra = []
 
-    def __init__(self, profile, sig_set, method='MLEZ', others_threshold=0, bootstrap=True, dummy_sigs=True, global_optimization=None, debug=False):
+    def __init__(self, profile, sig_set, method='MLEZ', others_threshold=0, bootstrap=True, dummy_sigs=True, global_optimization=None):
         """
         Arguments:
         `profile`: Profile to decompose. Must have length 96.
@@ -30,7 +30,6 @@ class Identify:
         self.method = method
         self.bootstrap = bootstrap
         self.enable_dummy = dummy_sigs
-        self.debug = debug
         self.global_optimization = global_optimization
         self.others_threshold = others_threshold
         self.W_and_labels = read_signatures(self.sig_set)
@@ -68,7 +67,6 @@ class Identify:
             sample,
             self.W_and_labels,
             self.method,
-            self.debug,
             self.others_threshold,
             self.global_optimization,
             self.enable_dummy)
