@@ -1,7 +1,9 @@
-# Identify: Identifying mutational profiles in samples
-
-
-## Description
+=====================================================
+Identify: Identifying mutational profiles in samples
+=====================================================
+-----------
+Description
+-----------
 Use mutagene signature to search for the presence of mutational signatures in mutational data.
 
 > Note: if you installed MutaGene in a virtual environment, make sure you activate the virtual environment first.
