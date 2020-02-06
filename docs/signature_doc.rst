@@ -70,18 +70,37 @@ MutaGene-5 contains 5 signatures, MutaGene-10 contains 10 signatures, and Cosmic
 &nbsp; &nbsp; &nbsp; &nbsp;  Short form of argument
 
 *Available methods:*
-|Argument   |Method|
-|-----------|:----:|            
-|frobenius |Frobenius
-|frobeniuszero |FrobeniusZero
-|js |js
-|divergencejs |divergencejs
-|mle |NegLogLik (MLE maximizes LogLik or minimizes NegLogLik)
-|mlez |NegLogLik (MLE with added context-independent signatures)
-|compat |MegLogLikOld (MLE with added context-independent signatures (old compatability mode))
-|aicc |AICc (AIC corrected for small samples)
-|bic |BIC
-|aiccz |BIC (BIC with added context-independent signatures)
+
+====== ====== ========
+A      B      A and B
+====== ====== ========
+true   True   True
+False  False  False
+====== ====== ========
+
++--------------+-------------------------------------------------------------------------------------+
+|Argument      |        Method                                                                       |
++====================================================================================================+            
+|frobenius     |Frobenius                                                                            |
++--------------+-------------------------------------------------------------------------------------+
+|frobeniuszero |FrobeniusZero                                                                        |
++--------------+-------------------------------------------------------------------------------------+
+|js            | js                                                                                  |   
++--------------|-------------------------------------------------------------------------------------+
+|divergencejs  |divergencejs                                                                         |
++--------------+-------------------------------------------------------------------------------------+
+|mle           |NegLogLik (MLE maximizes LogLik or minimizes NegLogLik)                              |
++--------------+-------------------------------------------------------------------------------------+
+|mlez          |NegLogLik (MLE with added context-independent signatures)                            |
++--------------+-------------------------------------------------------------------------------------+
+|compat        |MegLogLikOld (MLE with added context-independent signatures (old compatability mode))|
++--------------+-------------------------------------------------------------------------------------+
+|aicc          |AICc (AIC corrected for small samples)                                               |
++--------------+-------------------------------------------------------------------------------------+
+|bic           |BIC                                                                                  |
++--------------+-------------------------------------------------------------------------------------+
+|aiccz         |BIC (BIC with added context-independent signatures)                                  |
++--------------+-------------------------------------------------------------------------------------+
 
 2. *Do not account for unexplained variance (non-context dependent mutational processes and unknown signatures)*
 --no-unexplained-variance 
