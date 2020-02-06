@@ -6,10 +6,12 @@ Description
 -----------
 Use mutagene signature to search for the presence of mutational signatures in mutational data.
 
-**Note: if you installed MutaGene in a virtual environment, make sure you activate the virtual environment first.**
+*Note: if you installed MutaGene in a virtual environment, make sure you activate the virtual environment first.*
+
 -------------------
 1. Identify command
 -------------------
+
 To use the identify command, type 
 
 ``$ mutagene signature identify``
@@ -25,52 +27,57 @@ followed by the required arguments from the command line. You can always find he
 * **Command:** mutagene signature identify [-h] [--infile INFILE] [--genome GENOME] [--signatures {5,10,30,49}][--input-format {MAF,VCF}] [--outfile [OUTFILE]][--method [METHOD]] [--no-unexplained-variance][--bootstrap]
 
 * **Required Arguments (must be specified):**
-1. *Input file (with one or multiple samples) in VCF or MAF format where INFILE is the sample filename with extension:*
---infile INFILE
-Long form of argument
--i INFILE 
-Short form of argument
 
-2. *Location of genome assembly file in 2bit format where GENOME is the filename:*
---genome GENOME 
-Long form of argument
--g GENOME
-Short form of argument
+==========================  =============================================================
+Argument                    Description
+==========================  =============================================================
+--infile INFILE             Input file (with 1 or multiple samples) in VCF or MAF format
+                            (where INFILE is the sample filename with extension)
+-i INFILE                   Short form of --infile INFILE argument
+--genome GENOME             Location of genome assembly file in 2bit format
+                            (where GENOME is the filename)
+-g GENOME                   Short form of --genome GENOME argument
+--signatures {5,10,30,49}   Collection of signatures to use
+                            (include MutaGene-5 (5), MutaGene-10 (10), Cosmic-30(30)
+                            and Cosmic-49 (49))\ :sup:`1`
+-s {5,10,30,49}             Short form of --signatures {5,10,30,49}
+==========================  =============================================================
 
-3. *Collection of signatures to use include MutaGene-5 (5), MutaGene-10 (10), Cosmic-30(30)
-and Cosmic-49 (49):* 
-The MutaGene signature package allows for the analysis of 3 different "bundles" of mutational signatures: MutaGene-5 Signatures, MutaGene-10 Signatures, and Cosmic-30 Signatures.
+1. The MutaGene signature package allows for the analysis of 3 different "bundles" of mutational signatures: MutaGene-5 Signatures, MutaGene-10 Signatures, and Cosmic-30 Signatures.
 MutaGene-5 contains 5 signatures, MutaGene-10 contains 10 signatures, and Cosmic-30 contains 30 signatures.
 [Read more about the MutaGene signature package](https://www.ncbi.nlm.nih.gov/research/mutagene/signatures#mutational_signatures).
-[Read more about known signature Cosmic-49](https://cancer.sanger.ac.uk/cosmic/signatures/SBS/). 
-
---signatures {5,10,30,49}
-Long form of argument
--s {5,10,30,49}
-Short form of argument
+[Read more about known signature Cosmic-49](https://cancer.sanger.ac.uk/cosmic/signatures/SBS/)
 
 
 * **Optional Arguments (can be specified):**
-1. *Input file format: MAF, VCF (for MAF files -f argument can be omitted as default format):*
---input-format {MAF,VCF} 
-Long form of argument
--f {MAF,VCF}
-Short form of argument
 
-2. *Name of output file, will be generated in TSV format (if this argument is not included output is to screen):*
---outfile [OUTFILE] 
-Long form of argument
--o [OUTFILE]
-Short form of argument
+==========================  =============================================================
+Argument                    Description
+==========================  =============================================================
+--input-format {MAF,VCF}    Input file format: MAF, VCF
+                            (for MAF files -f argument can be omitted as default format)
+-f {MAF,VCF}                Short form of --input-format {MAF,VCF} argument
+--outfile [OUTFILE]         Name of output file, will be generated in TSV format 
+                            (if this argument is not included output is to screen)
+-o [OUTFILE]                Short form of --outfile [OUTFILE] argument
+==========================  =============================================================
+
 
 * **Advanced arguments:**
-1. *Method defines the function minimized in the optimization procedure (default method is mlez):*
---method [METHOD]
-Long form of argument
--m [METHOD]
-Short form of argument
+==========================  =============================================================
+Argument                    Description
+==========================  =============================================================
+--method [METHOD]           Method defines the function minimized in the optimization procedure
+                            (default method is mlez)\ :sup:`1`
+-m [METHOD]                 Short form of --method [METHOD] argument
+--no-unexplained-variance   Do not account for unexplained variance
+                            (non-context dependent mutational processes and unknown signatures)
+-U                          Short form of --no-unexplained-variance argument
+--bootstrap                 Use the bootstrap to calculate confidence intervals
+-b                          Short form of --bootstrap argument 
+==========================  =============================================================
 
-*Available methods:*
+1. Available methods
 
 ================= ===================================================================================== 
 Argument           Method      
@@ -87,16 +94,6 @@ bic                BIC
 aiccz              BIC (BIC with added context-independent signatures)  
 ================= =====================================================================================
 
-2. *Do not account for unexplained variance (non-context dependent mutational processes and unknown signatures)*
---no-unexplained-variance 
-Long form of argument
--U
-Short form of argument
-3. *Use the bootstrap to calculate confidence intervals:*
---bootstrap
-Long form of argument
--b       
-Short form of argument
 
 -----------
 3. Examples
