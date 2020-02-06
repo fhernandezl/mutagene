@@ -7,23 +7,19 @@ Description
 Use mutagene signature to search for the presence of mutational signatures in mutational data.
 
 > Note: if you installed MutaGene in a virtual environment, make sure you activate the virtual environment first.
-
-## 1. Identify command
-
+-------------------
+1. Identify command
+-------------------
 To use the identify command, type 
 
-```shell
-~]$ mutagene signature identify
-```
+``$ mutagene signature identify``
 
 followed by the required arguments from the command line. You can always find help on the required arguments using the following command:
 
-```shell
-~]$ mutagene signature identify -h
-```
-
-## 2. Arguments
-
+``$ mutagene signature identify -h``
+------------
+2. Arguments
+------------
 * **Command:** mutagene signature identify [-h] [--infile INFILE] [--genome GENOME] [--signatures {5,10,30,49}][--input-format {MAF,VCF}] [--outfile [OUTFILE]][--method [METHOD]] [--no-unexplained-variance][--bootstrap]
 
 * **Required Arguments (must be specified):**
@@ -98,16 +94,18 @@ MutaGene-5 contains 5 signatures, MutaGene-10 contains 10 signatures, and Cosmic
 -b       
 &nbsp; &nbsp; &nbsp; &nbsp;  Short form of argument
 
-
-## 3. Examples
+-----------
+3. Examples
+-----------
 *3.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)
 *
-### Command
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10
-```
-
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10``
+---------------
+Identify Output
+---------------
 |sample  |signature       |exposure        |mutations|
 |--------|:--------------:|:--------------:|--------:|
 |VCF     |2       |0.0935  |80
@@ -121,31 +119,36 @@ MutaGene-5 contains 5 signatures, MutaGene-10 contains 10 signatures, and Cosmic
 |VCF     |10      |0.0121  |10
 
 *3.2. Calculate the mutational profile for sample1.maf using -g hg38.2bit and MutaGene-5 signature set:*
-### Command
-```shell
-~]$ mutagene signature identify -i sample1.maf -g hg38.2bit -s5
-```
-
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i sample1.maf -g hg38.2bit -s5``
+---------------
+Identify Output
+---------------
 |sample  |signature       |exposure        |mutations|
 |--------|:--------------:|:--------------:|--------:|
 |TCGA-50-6593-01A-11D-1753-08    |2       |0.0348  |5
 |TCGA-50-6593-01A-11D-1753-08    |3       |0.0691  |11
 
 *3.3. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit (both in samples folder) and MutaGene-10 signature set and send output to a file out.tsv in out folder:*
-### Command
-```shell
-~]$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -o ../../out/out.tsv
-```
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -o ../../out/out.tsv``
+---------------
+Identify Output
+---------------
 As for example (3.1) except sent to file out.tsv instead of screen.
 
 *3.4. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set using the bootstrap to calculate confidence intervals:*
-### Command
-```shell
-~]$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -b
-```
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -b``
+---------------
+Identify Output
+---------------
 |sample|signature|exp|mut|exp_CI_low|exp_CI_high|mut_CI_low|mut_CI_high|
 |------|:-------:|:-:|:-:|:--------:|:---------:|:--------:|:---------:|
 |VCF     |2       |0.0948  |81      |0.0921  |0.0975  |79      |83
@@ -159,11 +162,13 @@ As for example (3.1) except sent to file out.tsv instead of screen.
 |VCF     |10      |0.0138  |12      |0.0112  |0.0164  |10      |14
 
 *3.5. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set. Use the bootstrap to calculate confidence intervals and do not account for unexplained variance (non-context dependent mutational processes and unknown signatures):*
-### Command
-```shell
-~]$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10  -U -b
-```
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10  -U -b``
+---------------
+Identify Output
+---------------
 |sample|signature|exp|mut|exp_CI_low|exp_CI_high|mut_CI_low|mut_CI_high|
 |------|:-------:|:-:|:-:|:--------:|:---------:|:--------:|:---------:|
 |VCF     |2       |0.1233  |105     |0.1203  |0.1263  |103     |108
@@ -177,34 +182,38 @@ As for example (3.1) except sent to file out.tsv instead of screen.
 |VCF     |10      |0.0708  |60      |0.0682  |0.0735  |58      |63
 
 *3.6. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobenius method:*
-### Command
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobenius
-```
-### Identify Output
+--------
+Command
+-------
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobenius``
+---------------
+Identify Output
+---------------
 |sample  |signature       |exposure        |mutations|
 |--------|:--------------:|:--------------:|:-------:|
 |VCF     |5       |1.0000  |853
 
 *3.7. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobeniuszero method:*
-### Command
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobeniuszero
-```
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobeniuszero``
+---------------
+Identify Output
+---------------
 |sample  |signature       |exposure        |mutations|
 |--------|:--------------:|:--------------:|:-------:|
 |VCF     |5       |0.7376  |629
 
 3.7. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the js or divergencejs method:*
-### Command
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m js
-```
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m divergencejs
-```
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m js``
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m divergencejs``
+----------------
+Identify Output
+----------------
 Both methods generate the same output for this input
 |sample  |signature       |exposure        |mutations|
 |--------|:--------------:|:--------------:|:-------:|
@@ -219,20 +228,16 @@ Both methods generate the same output for this input
 |VCF     |10      |0.1186  |101
 
 3.8. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the compat, aicc, bic or aiccz method:*
-### Command
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m compat
-```
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aic
-```
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m bic
-```
-```shell
-~]$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aiccz
-```
-### Identify Output
+-------
+Command
+-------
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m compat``
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aic``
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m bic``
+``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aiccz``
+---------------
+Identify Output
+---------------
 All 4 methods generate the same output for this input
 |sample  |signature       |exposure        |mutations|
 |--------|:--------------:|:--------------:|:-------:|
