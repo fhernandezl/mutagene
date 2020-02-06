@@ -102,8 +102,8 @@ aiccz              BIC (BIC with added context-independent signatures)
 -----------
 3. Examples
 -----------
-*3.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)
-*
+*3.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)*
+
 -------
 Command
 -------
@@ -183,7 +183,7 @@ VCF     7       0.0182     16      0.0154      0.0210       13          18
 VCF     8       0.0539     46      0.0505      0.0572       43          49
 VCF     9       0.0291     25      0.0264      0.0318       23          27
 VCF     10      0.0138     12      0.0112      0.0164       10          14
-====== ========= ===    =====  ===========  ===========  ========== ============
+====== ========= ======    =====  ===========  ===========  ========== ============
 
 *3.5. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set. Use the bootstrap to calculate confidence intervals and do not account for unexplained variance (non-context dependent mutational processes and unknown signatures):*
 -------
@@ -208,7 +208,7 @@ VCF     7        0.0980     84      0.0956      0.1005       82          86
 VCF     8        0.1047     89      0.1016      0.1077       87          92
 VCF     9        0.0633     54      0.0608      0.0658       52          56
 VCF     10       0.0708     60      0.0682      0.0735       58          63
-====== ========= ===    =====  ===========  ===========  ========== ============
+====== ========= =======    =====  ===========  ===========  ========== ============
 
 *3.6. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobenius method:*
 --------
@@ -250,6 +250,8 @@ Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m js``
+
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m divergencejs``
 
 ----------------
@@ -278,8 +280,14 @@ Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m compat``
+
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aic``
+
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m bic``
+
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aiccz``
 
 ---------------
