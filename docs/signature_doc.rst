@@ -109,17 +109,20 @@ Command
 ---------------
 Identify Output
 ---------------
-|sample  |signature       |exposure        |mutations|
-|--------|:--------------:|:--------------:|--------:|
-|VCF     |2       |0.0935  |80
-|VCF     |3       |0.0392  |33
-|VCF     |4       |0.0074  |6
-|VCF     |5       |0.0728  |62
-|VCF     |6       |0.1362  |116
-|VCF     |7       |0.0118  |10
-|VCF     |8       |0.0552  |47
-|VCF     |9       |0.0271  |23
-|VCF     |10      |0.0121  |10
+=======  ============ ============  =========== 
+sample     signature     exposure    mutations   
+=======  ============= ===========  =========== 
+VCF        2             0.0935      80
+VCF        3             0.0392      33
+VCF        4             0.0074      6
+VCF        5             0.0728      62
+VCF        6             0.1362      116
+VCF        7             0.0118      10
+VCF        8             0.0552      47
+VCF        9             0.0271      23
+VCF        10            0.0121      10
+=======  ============= ===========  ===========
+
 
 *3.2. Calculate the mutational profile for sample1.maf using -g hg38.2bit and MutaGene-5 signature set:*
 -------
@@ -129,10 +132,12 @@ Command
 ---------------
 Identify Output
 ---------------
-|sample  |signature       |exposure        |mutations|
-|--------|:--------------:|:--------------:|--------:|
-|TCGA-50-6593-01A-11D-1753-08    |2       |0.0348  |5
-|TCGA-50-6593-01A-11D-1753-08    |3       |0.0691  |11
+=============================  ===========  ==========  ===========  
+sample                          signature    exposure    mutations
+=============================  ===========  ==========  ===========
+TCGA-50-6593-01A-11D-1753-08    2            0.0348      5
+TCGA-50-6593-01A-11D-1753-08    3            0.0691      11
+=============================  ===========  ==========  ===========  
 
 *3.3. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit (both in samples folder) and MutaGene-10 signature set and send output to a file out.tsv in out folder:*
 -------
@@ -152,17 +157,19 @@ Command
 ---------------
 Identify Output
 ---------------
-|sample|signature|exp|mut|exp_CI_low|exp_CI_high|mut_CI_low|mut_CI_high|
-|------|:-------:|:-:|:-:|:--------:|:---------:|:--------:|:---------:|
-|VCF     |2       |0.0948  |81      |0.0921  |0.0975  |79      |83
-|VCF     |3       |0.0383  |33      |0.0340  |0.0427  |29      |36
-|VCF     |4       |0.0109  |9       |0.0081  |0.0136  |7       |12
-|VCF     |5       |0.0746  |64      |0.0722  |0.0769  |62      |66
-|VCF     |6       |0.1468  |125     |0.1417  |0.1518  |121     |129
-|VCF     |7       |0.0182  |16      |0.0154  |0.0210  |13      |18
-|VCF     |8       |0.0539  |46      |0.0505  |0.0572  |43      |49
-|VCF     |9       |0.0291  |25      |0.0264  |0.0318  |23      |27
-|VCF     |10      |0.0138  |12      |0.0112  |0.0164  |10      |14
+====== ========= ======    =====  ===========  ===========  ========== ============
+sample signature exp       mut     exp_CI_low  exp_CI_high  mut_CI_low  mut_CI_high
+====== ========= ======    =====  ===========  ===========  ========== ============
+VCF     2       0.0948     81      0.0921      0.0975       79          83
+VCF     3       0.0383     33      0.0340      0.0427       29          36
+VCF     4       0.0109     9       0.0081      0.0136       7           12
+VCF     5       0.0746     64      0.0722      0.0769       62          66
+VCF     6       0.1468     125     0.1417      0.1518       121         129
+VCF     7       0.0182     16      0.0154      0.0210       13          18
+VCF     8       0.0539     46      0.0505      0.0572       43          49
+VCF     9       0.0291     25      0.0264      0.0318       23          27
+VCF     10      0.0138     12      0.0112      0.0164       10          14
+====== ========= ===    =====  ===========  ===========  ========== ============
 
 *3.5. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set. Use the bootstrap to calculate confidence intervals and do not account for unexplained variance (non-context dependent mutational processes and unknown signatures):*
 -------
@@ -172,17 +179,19 @@ Command
 ---------------
 Identify Output
 ---------------
-|sample|signature|exp|mut|exp_CI_low|exp_CI_high|mut_CI_low|mut_CI_high|
-|------|:-------:|:-:|:-:|:--------:|:---------:|:--------:|:---------:|
-|VCF     |2       |0.1233  |105     |0.1203  |0.1263  |103     |108
-|VCF     |3       |0.1987  |170     |0.1944  |0.2030  |166     |173
-|VCF     |4       |0.0697  |59      |0.0676  |0.0717  |58      |61
-|VCF     |5       |0.0878  |75      |0.0850  |0.0906  |73      |77
-|VCF     |6       |0.1820  |155     |0.1782  |0.1858  |152     |159
-|VCF     |7       |0.0980  |84      |0.0956  |0.1005  |82      |86
-|VCF     |8       |0.1047  |89      |0.1016  |0.1077  |87      |92
-|VCF     |9       |0.0633  |54      |0.0608  |0.0658  |52      |56
-|VCF     |10      |0.0708  |60      |0.0682  |0.0735  |58      |63
+====== ========= =======    =====  ===========  ===========  ========== ============
+sample signature exp        mut     exp_CI_low  exp_CI_high  mut_CI_low  mut_CI_high
+====== ========= =======    =====  ===========  ===========  ========== ============
+VCF     2        0.1233     105     0.1203      0.1263       103         108
+VCF     3        0.1987     170     0.1944      0.2030       166         173
+VCF     4        0.0697     59      0.0676      0.0717       58          61
+VCF     5        0.0878     75      0.0850      0.0906       73          77
+VCF     6        0.1820     155     0.1782      0.1858       152         159
+VCF     7        0.0980     84      0.0956      0.1005       82          86
+VCF     8        0.1047     89      0.1016      0.1077       87          92
+VCF     9        0.0633     54      0.0608      0.0658       52          56
+VCF     10       0.0708     60      0.0682      0.0735       58          63
+====== ========= ===    =====  ===========  ===========  ========== ============
 
 *3.6. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobenius method:*
 --------
@@ -192,9 +201,11 @@ Command
 ---------------
 Identify Output
 ---------------
-|sample  |signature       |exposure        |mutations|
-|--------|:--------------:|:--------------:|:-------:|
-|VCF     |5       |1.0000  |853
+======  ==========  ==========  ===========
+sample  signature    exposure    mutations
+======  ==========  ==========  ===========
+VCF     5            1.0000      853
+======  ==========  ==========  ===========
 
 *3.7. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobeniuszero method:*
 -------
@@ -204,10 +215,11 @@ Command
 ---------------
 Identify Output
 ---------------
-|sample  |signature       |exposure        |mutations|
-|--------|:--------------:|:--------------:|:-------:|
-|VCF     |5       |0.7376  |629
-
+======  ==========  ==========  =========
+sample  signature   exposure    mutations
+======  ==========  ==========  =========
+VCF     5           0.7376      629
+======  ==========  ==========  =========
 3.7. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the js or divergencejs method:*
 -------
 Command
@@ -218,17 +230,19 @@ Command
 Identify Output
 ----------------
 Both methods generate the same output for this input
-|sample  |signature       |exposure        |mutations|
-|--------|:--------------:|:--------------:|:-------:|
-|VCF     |2       |0.0795  |68
-|VCF     |3       |0.1634  |139
-|VCF     |4       |0.0244  |21
-|VCF     |5       |0.0756  |64
-|VCF     |6       |0.2012  |172
-|VCF     |7       |0.0791  |67
-|VCF     |8       |0.0756  |64
-|VCF     |9       |0.1020  |87
-|VCF     |10      |0.1186  |101
+======  =========  ==========  ==========
+sample  signature   exposure    mutations
+======  =========  ==========  ==========
+VCF     2           0.0795     68
+VCF     3           0.1634     139
+VCF     4           0.0244     21
+VCF     5           0.0756     64
+VCF     6           0.2012     172
+VCF     7           0.0791     67
+VCF     8           0.0756     64
+VCF     9           0.1020     87
+VCF     10          0.1186     101
+======  =========  ==========  ==========
 
 3.8. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the compat, aicc, bic or aiccz method:*
 -------
@@ -242,15 +256,16 @@ Command
 Identify Output
 ---------------
 All 4 methods generate the same output for this input
-|sample  |signature       |exposure        |mutations|
-|--------|:--------------:|:--------------:|:-------:|
-|VCF     |2       |0.0973  |83
-|VCF     |3       |0.0536  |46
-|VCF     |5       |0.0825  |70
-|VCF     |6       |0.1687  |144
-|VCF     |7       |0.0220  |19
-|VCF     |8       |0.0296  |25
-|VCF     |9       |0.0213  |18
-|VCF     |10      |0.0034  |3
+======  =========  ==========  =========
+sample  signature   exposure   mutations
+======  =========  ==========  =========
+VCF     2           0.0973     83
+VCF     3           0.0536     46
+VCF     5           0.0825     70
+VCF     6           0.1687     144
+VCF     7           0.0220     19
+VCF     8           0.0296     25
+VCF     9           0.0213     18
+VCF     10          0.0034     3
 
 
