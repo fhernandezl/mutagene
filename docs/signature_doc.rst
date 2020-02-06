@@ -17,9 +17,11 @@ To use the identify command, type
 followed by the required arguments from the command line. You can always find help on the required arguments using the following command:
 
 ``$ mutagene signature identify -h``
+
 ------------
 2. Arguments
 ------------
+
 * **Command:** mutagene signature identify [-h] [--infile INFILE] [--genome GENOME] [--signatures {5,10,30,49}][--input-format {MAF,VCF}] [--outfile [OUTFILE]][--method [METHOD]] [--no-unexplained-variance][--bootstrap]
 
 * **Required Arguments (must be specified):**
@@ -105,10 +107,13 @@ aiccz              BIC (BIC with added context-independent signatures)
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10``
+
 ---------------
 Identify Output
 ---------------
+
 =======  ============ ============  =========== 
 sample     signature     exposure    mutations   
 =======  ============= ===========  =========== 
@@ -125,13 +130,17 @@ VCF        10            0.0121      10
 
 
 *3.2. Calculate the mutational profile for sample1.maf using -g hg38.2bit and MutaGene-5 signature set:*
+
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i sample1.maf -g hg38.2bit -s5``
+
 ---------------
 Identify Output
 ---------------
+
 =============================  ===========  ==========  ===========  
 sample                          signature    exposure    mutations
 =============================  ===========  ==========  ===========
@@ -143,7 +152,9 @@ TCGA-50-6593-01A-11D-1753-08    3            0.0691      11
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -o ../../out/out.tsv``
+
 ---------------
 Identify Output
 ---------------
@@ -153,10 +164,13 @@ As for example (3.1) except sent to file out.tsv instead of screen.
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -b``
+
 ---------------
 Identify Output
 ---------------
+
 ====== ========= ======    =====  ===========  ===========  ========== ============
 sample signature exp       mut     exp_CI_low  exp_CI_high  mut_CI_low  mut_CI_high
 ====== ========= ======    =====  ===========  ===========  ========== ============
@@ -175,10 +189,13 @@ VCF     10      0.0138     12      0.0112      0.0164       10          14
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10  -U -b``
+
 ---------------
 Identify Output
 ---------------
+
 ====== ========= =======    =====  ===========  ===========  ========== ============
 sample signature exp        mut     exp_CI_low  exp_CI_high  mut_CI_low  mut_CI_high
 ====== ========= =======    =====  ===========  ===========  ========== ============
@@ -197,10 +214,13 @@ VCF     10       0.0708     60      0.0682      0.0735       58          63
 --------
 Command
 -------
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobenius``
+
 ---------------
 Identify Output
 ---------------
+
 ======  ==========  ==========  ===========
 sample  signature    exposure    mutations
 ======  ==========  ==========  ===========
@@ -211,25 +231,33 @@ VCF     5            1.0000      853
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobeniuszero``
+
 ---------------
 Identify Output
 ---------------
+
 ======  ==========  ==========  =========
 sample  signature   exposure    mutations
 ======  ==========  ==========  =========
 VCF     5           0.7376      629
 ======  ==========  ==========  =========
+
 3.7. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the js or divergencejs method:*
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m js``
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m divergencejs``
+
 ----------------
 Identify Output
 ----------------
+
 Both methods generate the same output for this input
+
 ======  =========  ==========  ==========
 sample  signature   exposure    mutations
 ======  =========  ==========  ==========
@@ -248,14 +276,17 @@ VCF     10          0.1186     101
 -------
 Command
 -------
+
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m compat``
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aic``
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m bic``
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aiccz``
+
 ---------------
 Identify Output
 ---------------
 All 4 methods generate the same output for this input
+
 ======  =========  ==========  =========
 sample  signature   exposure   mutations
 ======  =========  ==========  =========
@@ -267,5 +298,5 @@ VCF     7           0.0220     19
 VCF     8           0.0296     25
 VCF     9           0.0213     18
 VCF     10          0.0034     3
-
+======  =========  ==========  =========
 
