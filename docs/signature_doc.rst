@@ -24,9 +24,9 @@ followed by the required arguments from the command line. You can always find he
 2. Arguments
 ------------
 
-* **Command:** mutagene signature identify [arguments]
+**2.1.Command:** mutagene signature identify [arguments]
 
-* **Required Arguments (must be specified):**
+**2.2.Required Arguments (must be specified):**
 
 =========================   ============================================================  ====================
 Argument                    Description                                                   Example
@@ -38,7 +38,7 @@ Argument                    Description                                         
                             (where GENOME is the filename)                    
 -g GENOME                   Short form of --genome GENOME argument                         -g hg38.2bit                      
 --signatures {5,10,30,49}   Collection of signatures to use (include MutaGene-5 (5),       --signatures10 
-                            MutaGene-10 (10), Cosmic-30(30) and Cosmic-49 (49))\ :sup:`1`
+                            MutaGene-10(10), Cosmic-30(30) and Cosmic-49(49))\ :sup:`1`
 -s {5,10,30,49}             Short form of --signatures {5,10,30,49}                        -s10  
 =========================   ============================================================  ====================                                                                                                                                          
 
@@ -48,33 +48,33 @@ MutaGene-5 contains 5 signatures, MutaGene-10 contains 10 signatures, and Cosmic
 [Read more about known signature Cosmic-49](https://cancer.sanger.ac.uk/cosmic/signatures/SBS/)
 
 
-* **Optional Arguments (can be specified):**
+**2.3.Optional Arguments (can be specified):**
 
-==========================  =============================================================
-Argument                    Description
-==========================  =============================================================
---input-format {MAF,VCF}    Input file format: MAF, VCF
+==========================  =============================================================  ============================
+Argument                    Description                                                    Example
+==========================  =============================================================  ============================
+--input-format {MAF,VCF}    Input file format: MAF, VCF                                     --input-format VCF
                             (for MAF files -f argument can be omitted as default format)
--f {MAF,VCF}                Short form of --input-format {MAF,VCF} argument
---outfile [OUTFILE]         Name of output file, will be generated in TSV format 
+-f {MAF,VCF}                Short form of --input-format {MAF,VCF} argument                 -f VCF 
+--outfile [OUTFILE]         Name of output file, will be generated in TSV format            --outfile ../../out/out.tsv
                             (if this argument is not included output is to screen)
--o [OUTFILE]                Short form of --outfile [OUTFILE] argument
-==========================  =============================================================
+-o [OUTFILE]                Short form of --outfile [OUTFILE] argument                      -o ../../out/out.tsv
+==========================  =============================================================  ============================
 
 
-* **Advanced arguments:**
-==========================  =============================================================
-Argument                    Description
-==========================  =============================================================
---method [METHOD]           Method defines the function minimized in the optimization procedure
+**2.4.Advanced arguments:**
+==========================  ===================================================================  =========================
+Argument                    Description                                                          Example
+==========================  ===================================================================  =========================
+--method [METHOD]           Method defines the function minimized in the optimization procedure  -method frobenius
                             (default method is mlez)\ :sup:`1`
--m [METHOD]                 Short form of --method [METHOD] argument
---no-unexplained-variance   Do not account for unexplained variance
+-m [METHOD]                 Short form of --method [METHOD] argument                             -m frobenius
+--no-unexplained-variance   Do not account for unexplained variance                              --no-unexplained-variance
                             (non-context dependent mutational processes and unknown signatures)
--U                          Short form of --no-unexplained-variance argument
---bootstrap                 Use the bootstrap to calculate confidence intervals
--b                          Short form of --bootstrap argument 
-==========================  =============================================================
+-U                          Short form of --no-unexplained-variance argument                     -U
+--bootstrap                 Use the bootstrap to calculate confidence intervals                  --bootstrap
+-b                          Short form of --bootstrap argument                                   -b
+==========================  ===================================================================  =========================
 
 1. Available methods
 
@@ -98,15 +98,14 @@ aiccz              BIC (BIC with added context-independent signatures)
 3. Examples
 -----------
 *3.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)*
-
 -------
-Command
+3.1.1.Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10``
 
 ---------------
-Identify Output
+3.1.2.Identify Output
 ---------------
 
 =======  ============  ============  =========== 
@@ -125,15 +124,14 @@ VCF        10            0.0121      10
 
 
 *3.2. Calculate the mutational profile for sample1.maf using -g hg38.2bit and MutaGene-5 signature set:*
-
 -------
-Command
+3.2.1.Command
 -------
 
 ``$ mutagene signature identify -i sample1.maf -g hg38.2bit -s5``
 
 ---------------
-Identify Output
+3.2.2.Identify Output
 ---------------
 
 =============================  ===========  ==========  ===========  
@@ -145,25 +143,25 @@ TCGA-50-6593-01A-11D-1753-08    3            0.0691      11
 
 *3.3. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit (both in samples folder) and MutaGene-10 signature set and send output to a file out.tsv in out folder:*
 -------
-Command
+3.3.1.Command
 -------
 
 ``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -o ../../out/out.tsv``
 
 ---------------
-Identify Output
+3.3.2.Identify Output
 ---------------
 As for example (3.1) except sent to file out.tsv instead of screen.
 
 *3.4. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set using the bootstrap to calculate confidence intervals:*
 -------
-Command
+3.4.1.Command
 -------
 
 ``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10 -b``
 
 ---------------
-Identify Output
+3.4.2.Identify Output
 ---------------
 
 ======  =========  =======  =====  ===========  ===========  ==========  ============
@@ -182,13 +180,13 @@ VCF     10         0.0138    12     0.0112      0.0164       10          14
 
 *3.5. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set. Use the bootstrap to calculate confidence intervals and do not account for unexplained variance (non-context dependent mutational processes and unknown signatures):*
 -------
-Command
+3.5.1.Command
 -------
 
 ``$ mutagene signature identify -i ../../samples/PD3851a.vcf -g ../../samples/hg38.2bit -f VCF -s10  -U -b``
 
 ---------------
-Identify Output
+3.5.2.Identify Output
 ---------------
 
 ====== ========= =======    =====  ===========  ===========  ========== ============
@@ -207,13 +205,13 @@ VCF     10       0.0708     60      0.0682      0.0735       58          63
 
 *3.6. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobenius method:*
 --------
-Command
+3.6.1.Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobenius``
 
 ---------------
-Identify Output
+3.6.2.Identify Output
 ---------------
 
 ======  ==========  ==========  ===========
@@ -224,13 +222,13 @@ VCF     5            1.0000      853
 
 *3.7. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and frobeniuszero method:*
 -------
-Command
+3.7.1.Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m frobeniuszero``
 
 ---------------
-Identify Output
+3.7.2.Identify Output
 ---------------
 
 ======  ==========  ==========  =========
@@ -241,7 +239,7 @@ VCF     5           0.7376      629
 
 3.8. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the js or divergencejs method:*
 -------
-Command
+3.8.1.Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m js``
@@ -250,7 +248,7 @@ Command
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m divergencejs``
 
 ----------------
-Identify Output
+3.8.2.Identify Output
 ----------------
 
 Both methods generate the same output for this input
@@ -271,7 +269,7 @@ VCF     10          0.1186     101
 
 3.9. Calculate the mutational profile for PD3851a.vcf using -g hg38.2bit and MutaGene-10 signature set and either the compat, aicc, bic or aiccz method:*
 -------
-Command
+3.9.1.Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m compat``
@@ -286,7 +284,7 @@ Command
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10 -m aiccz``
 
 ---------------
-Identify Output
+3.9.2.Identify Output
 ---------------
 All 4 methods generate the same output for this input
 
