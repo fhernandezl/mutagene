@@ -24,24 +24,23 @@ followed by the required arguments from the command line. You can always find he
 2. Arguments
 ------------
 
-* **Command:** mutagene signature identify [-h] [--infile INFILE] [--genome GENOME] [--signatures {5,10,30,49}][--input-format {MAF,VCF}] [--outfile [OUTFILE]][--method [METHOD]] [--no-unexplained-variance][--bootstrap]
+* **Command:** mutagene signature identify [arguments]
 
 * **Required Arguments (must be specified):**
 
-==========================  =============================================================
-Argument                    Description
-==========================  =============================================================
---infile INFILE             Input file (with 1 or multiple samples) in VCF or MAF format
+=========================   ============================================================  ====================
+Argument                    Description                                                   Example
+=========================   ============================================================  ====================
+--infile INFILE             Input file (with 1 or multiple samples) in VCF or MAF format  --infile PD3851a.vcf
                             (where INFILE is the sample filename with extension)
--i INFILE                   Short form of --infile INFILE argument
---genome GENOME             Location of genome assembly file in 2bit format
-                            (where GENOME is the filename)
--g GENOME                   Short form of --genome GENOME argument
---signatures {5,10,30,49}   Collection of signatures to use
-                            (include MutaGene-5 (5), MutaGene-10 (10), Cosmic-30(30)
-                            and Cosmic-49 (49))\ :sup:`1`
--s {5,10,30,49}             Short form of --signatures {5,10,30,49}
-==========================  =============================================================
+-i INFILE                   Short form of --infile INFILE argument                         -i PD3851a.vcf 
+--genome GENOME             Location of genome assembly file in 2bit format                --genome hg38.2bit   
+                            (where GENOME is the filename)                    
+-g GENOME                   Short form of --genome GENOME argument                         -g hg38.2bit                      
+--signatures {5,10,30,49}   Collection of signatures to use (include MutaGene-5 (5),       --signatures10 
+                            MutaGene-10 (10), Cosmic-30(30) and Cosmic-49 (49))\ :sup:`1`
+-s {5,10,30,49}             Short form of --signatures {5,10,30,49}                        -s10  
+=========================   ============================================================  ====================                                                                                                                                          
 
 1. The MutaGene signature package allows for the analysis of 3 different "bundles" of mutational signatures: MutaGene-5 Signatures, MutaGene-10 Signatures, and Cosmic-30 Signatures.
 MutaGene-5 contains 5 signatures, MutaGene-10 contains 10 signatures, and Cosmic-30 contains 30 signatures.
