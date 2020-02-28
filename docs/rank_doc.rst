@@ -47,7 +47,8 @@ Argument                    Description                                         
 Argument                                   Description                                        Example
 =========================================  =================================================  ==================================
 --outfile OUTFILE                          Name of output file, will be generated in           --outfile out.tsv
-                                           TSV format                
+                                           TSV format  (If this argument is not included,
+                                           output is to screen)   
 -o OUTFILE                                 Short form of --outfile OUTFILE                     -o out.tsv
 --profile PROFILE                          Override profile to calculate mutability
                                            (may also describe cohort size)
