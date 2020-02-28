@@ -98,27 +98,56 @@ Argument                    Description                                         
                             motif. Use quotes
 -m MOTIF                    Short form of --motif MOTIF
 window-size WINDOW_SIZE     Context window size for motif search
-                            (default setting is 50)\ :sup:'1'
+                            (default setting is 50)\ :sup:`a`
 -w WINDOW_SIZE              Short form of window-size WINDOW_SIZE
 --strand {+,-,=,+-=}        Transcribed strand (+), non-transcribed (-), any (=),
-                            or all (+-= default)
+                            or all (+-= default)\ :sup:`b`
 -s {+,-,=,+-=}              Short form of --strand {+,-,=,+-=}
 ==========================  =============================================================  ============================
 
+a. Window Size Parameter Explanation: MutaGene counts window size as the number of DNA bases searched for from the first base of the DNA sequence gathered up to but not including the mutated base. Therefore, the effective length of the DNA sequence searched is 2 * window-size + 1. It may be advantageous to use a window size longer than the default 50 bases if the motif is longer than three nucleotides,
+as this motif is likely to appear less frequently in the DNA context. Similarly, if the motif is shorter than three nucleotides,
+it may be advantageous to use a window size shorter than the default 50 bases, as the motif is likely to appear in DNA more frequently.
+b. Strand Parameter Explanation: MutaGene can search for the presence of a motif on the transcribed or non-transcribed DNA strands or both strands. This information is gathered from the input file provided by the user. Analyzing for the presence on a transcribed or non-transcribed strand is advantageous when a mutational process is known to have mutations with a transcriptional strand bias. For instance, the APOBEC1/3A/B family is known to be associated with mutational processes that have a transcriptional strand bias of mutations in exons. The transcription strand refers to the coding DNA strand, and the non-transcription strand refers to the template DNA strand.
+
+---------------------------------
+4. Interpretation of Motif Output
+---------------------------------
+If no motifs are significantly present in the data, the output will say: "WARNING No significant motif matches found".
+
+If the presence of a motif is significant in the data, the output will show a table with the following headers:
+
+=============  =======================================================================================================================
+Header         Description
+=============  =======================================================================================================================
+Sample         Name of Sample. If input file contains multiple samples, output will be stratified per sample.
+Name           Name of motif. If -m/--motif argument is given, name will be "Custom motif".
+Motif          Motif searched for in data
+Strand         DNA Strand that motif was searched for on. '+': transcribed strand, '-': non-transcribed strand, "=": any strand, "+-=":                all strands.
+Enrichment     Quantitative measure of motif's prevalence, significant if greater than one.\ :sup:`a`
+mut_low_est    Conservative estimate for number of mutations (of total number in input file) that match motif
+mut_high_est   Maximum number of mutations (of total number in input file) that match the motif
+pvalue         Fisher's p-value for motif significance
+qvalue         Fisher's p-value with Benjamini-Hochberg correction for motif significance
+=============  =======================================================================================================================
+
+a. How to Interpret Enrichment Output: Enrichment is modeled off of a risk ratio, meaning that a motif’s enrichment is essentially a ratio between the probability of a motif appearing in a cancer sample’s DNA mutations and the probability of a motif appearing in a
+cancer sample’s DNA context. Because enrichment is modeled off a risk ratio, it can be interpreted the same way. The result of enrichment minus one is the percent overrepresentation of a motif. For example, if enrichment is 1.5, it means that there is a 50%
+overrepresentation of the mutated motif (as compared to what is likely by chance). For this reason, enrichment is considered significant if it is greater than one. Motifs with enrichments <= 1 are not reported by MutaGene.
 
 -----------
-4. Examples
+5. Examples
 -----------
-*4.1. Search for the presence of mutational motifs in sample1.maf using genome hg19 in any strand*
+*5.1. Search for the presence of mutational motifs in sample1.maf using genome hg19 in any strand*
 -------
-4.1.1.Command
+5.1.1.Command
 -------
 
 ``$ mutagene motif search -i sample1.maf -g hg19 -s "="``
 
----------------
-4.1.2.Motif Output
----------------
+------------------
+5.1.2.Motif Output
+------------------
 
 ============================  ===========  ======  ======  =================  ======================  ===========  ============
 sample                        name         motif   strand  enrichment         pvalue                  mut_low_est  mut_high_est   
