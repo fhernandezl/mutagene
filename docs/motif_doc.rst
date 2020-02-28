@@ -98,7 +98,7 @@ Argument                    Description                                         
                             motif. Use quotes
 -m MOTIF                    Short form of --motif MOTIF
 window-size WINDOW_SIZE     Context window size for motif search
-                            (default setting is 50
+                            (default setting is 50)\ :sup:'1'
 -w WINDOW_SIZE              Short form of window-size WINDOW_SIZE
 --strand {+,-,=,+-=}        Transcribed strand (+), non-transcribed (-), any (=),
                             or all (+-= default)
@@ -109,30 +109,22 @@ window-size WINDOW_SIZE     Context window size for motif search
 -----------
 4. Examples
 -----------
-*4.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)*
+*4.1. Search for the presence of mutational motifs in sample1.maf using genome hg19 in any strand*
 -------
 4.1.1.Command
 -------
 
-``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10``
+``$ mutagene motif search -i sample1.maf -g hg19 -s "="``
 
 ---------------
-4.1.2.Identify Output
+4.1.2.Motif Output
 ---------------
 
-=======  ============  ============  =========== 
-sample     signature     exposure    mutations   
-=======  ============  ============  =========== 
-VCF        2             0.0935      80
-VCF        3             0.0392      33
-VCF        4             0.0074      6
-VCF        5             0.0728      62
-VCF        6             0.1362      116
-VCF        7             0.0118      10
-VCF        8             0.0552      47
-VCF        9             0.0271      23
-VCF        10            0.0121      10
-=======  ============  ============  =========== 
+============================  ===========  ======  ======  =================  ======================  ===========  ============
+sample                        name         motif   strand  enrichment         pvalue                  mut_low_est  mut_high_est   
+============================  ===========  ======  ======  =================  ======================  ===========  ============
+TCGA-50-6593-01A-11D-1753-08  C>T in CpG   [C>T]G  '='     4.586718025481874  1.0181609110804669e-06  15           18.0
+============================  ===========  ======  ======  =================  ======================  ===========  ============ 
 
 
 
