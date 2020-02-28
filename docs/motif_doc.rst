@@ -43,29 +43,32 @@ The publication `Mutational signatures and mutable motifs in cancer genomes <htt
 *Note: if you installed MutaGene in a virtual environment, make sure you activate the virtual environment first.*
 
 -------------------
-1. Motif command
+2. Motif command
 -------------------
 
 To use the motif command, type 
 
-``$ mutagene signature identify``
+``$mutagene motif <action (search or list)>``
 
-followed by the required arguments from the command line. You can always find help on the required arguments using the following command:
+If search is specified, infile and genome are also required:
 
-``$ mutagene signature identify -h``
+``$ mutagene motif search [arguments]``
 
-------------
-2. Arguments
-------------
-
-**2.1.Command:** ``$ mutagene motif search [arguments]``
-
-followed by the required arguments from the command line. 
 You can always find help on the required arguments using the following command:
 
 ``$ mutagene motif search -h``
+or
+``$mutagene motif list -h``
 
-**2.2.Required Arguments (must be specified):**
+------------
+3. Arguments
+------------
+
+**3.1.Command:** ``$mutagene motif <action (search or list)>``
+
+followed by the required arguments from the command line. 
+
+**3.2.Required Arguments (must be specified):**
 
 Motif function requires:
 ``$mutagene motif <action (search or list)>``
@@ -83,7 +86,7 @@ Argument                    Description                                         
 =========================   ============================================================  ====================                                                                                                                                          
 
 
-**2.3.Optional Arguments (can be specified):**
+**3.3.Optional Arguments (can be specified):**
 
 ==========================  =============================================================  ============================
 Argument                    Description                                                    Example
@@ -104,17 +107,17 @@ window-size WINDOW_SIZE     Context window size for motif search
 
 
 -----------
-3. Examples
+4. Examples
 -----------
-*3.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)*
+*4.1. Search for the presence of MutaGene-10 signatures in PD3851a.vcf using hg38 and default method mlez (method mle gives same output for this input)*
 -------
-3.1.1.Command
+4.1.1.Command
 -------
 
 ``$ mutagene signature identify -i PD3851a.vcf -g hg38.2bit -f VCF -s10``
 
 ---------------
-3.1.2.Identify Output
+4.1.2.Identify Output
 ---------------
 
 =======  ============  ============  =========== 
