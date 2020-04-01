@@ -17,11 +17,11 @@ class MotifMenu(object):
         parser.description = ""
         parser.epilog = """
 Examples:
-# search in sample2.vcf for all preidentified motifs in mutagene using hg18
-mutagene motif -i sample2.vcf -f VCF -g hg18
+# search in sample2.vcf for all preidentified motifs in mutagene using hg19
+mutagene motif --infile sample2.vcf --input-format VCF --genome hg19
 
-# search for the presence of the C[A>T] motif in sample1.maf using hg19
-mutagene motif -i sample1.maf -f MAF -g hg19 -m 'C[A>T]'
+# search for the presence of the C[A>T] motif in sample1.maf using hg19 not checking for strand-specificity
+mutagene motif --infile sample1.maf --input-format MAF --genome hg19 --motif 'C[A>T]' --strand A
         """
 
         ###################################################################
@@ -42,6 +42,9 @@ mutagene motif -i sample1.maf -f MAF -g hg19 -m 'C[A>T]'
             '--outfile', "-o", nargs='?', type=argparse.FileType('w'), default=sys.stdout,
             help="Name of output file, will be generated in TSV format")
 
+        # for backwards compatibility with 0.8.X add a hidden action that would just take anything as a valid input
+        optional_group.add_argument('action', nargs="?", metavar="")
+
         ###################################################################
         advanced_group = parser.add_argument_group('Advanced arguments')
         advanced_group.add_argument(
@@ -49,12 +52,20 @@ mutagene motif -i sample1.maf -f MAF -g hg19 -m 'C[A>T]'
             type=int, default=50)
         advanced_group.add_argument(
             '--strand', "-s",
-            help="Transcribed strand (+), non-transcribed (-), any (=), or all (+-= default) ",
-            type=str, default='+-=', choices=['+', '-', '=', '+-='])
+            help="Transcribed strand (T), non-transcribed (N), any (A), or all (TNA default) ",
+            type=str, default='TNA', choices=['T', 'N', 'A', 'TNA'])
         advanced_group.add_argument(
             '--threshold', "-t",
             help="Significance threshold for qvalues, default value=0.05",
             type=float, default=0.05)
+        advanced_group.add_argument(
+            '--save-motif-matches',
+            help="Save mutations in matching motifs to a BED file",
+            type=argparse.FileType('w'), default=None)
+        advanced_group.add_argument(
+            '--test',
+            help="Statistical test to use",
+            type=str, default='Fisher', choices=['Fisher', 'Chi2'])
 
         self.parser = parser
 
@@ -88,8 +99,8 @@ mutagene motif -i sample1.maf -f MAF -g hg19 -m 'C[A>T]'
 
             logger.info("Searching for motif {}".format(custom_motif))
 
-        if args.window_size > 250 or args.window_size < 1:
-            logger.warning('window-size should be between 1 and 250 nucleotides')
+        if args.window_size > 5000 or args.window_size < 1:
+            logger.warning('window-size should be between 1 and 5000 nucleotides')
             return
 
         try:
@@ -106,16 +117,23 @@ mutagene motif -i sample1.maf -f MAF -g hg19 -m 'C[A>T]'
         if len(mutations_with_context) == 0:
             logger.warning("No mutations loaded")
 
-        #### Performance PROFILING
+        #######################
+        # Performance PROFILING
         # import cProfile
         # import pstats
         # pr = cProfile.Profile()
         # pr.enable()
 
-        matching_motifs = identify_motifs(mutations_with_context, custom_motif,
-                                          args.strand, args.threshold) if mutations_with_context is not None else []
+        matching_motifs = identify_motifs(
+            samples_mutations=mutations_with_context,
+            custom_motif=custom_motif,
+            strand=args.strand,
+            threshold=args.threshold,
+            dump_matches=args.save_motif_matches,
+            stat_type=args.test) if mutations_with_context is not None else []
 
-        #### Performance PROFILING
+        #######################
+        # Performance PROFILING
         # pr.disable()
         # p = pstats.Stats(pr)
         # p.sort_stats('ncalls').print_stats(20)  # strip_dirs()

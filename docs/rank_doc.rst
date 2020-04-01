@@ -1,10 +1,17 @@
-=====================================================
-Rank: Identifying potential drivers in samples
-=====================================================
+
 -----------
 Description
 -----------
 Use mutagene rank to analyze genes and compare observed mutational frequencies to expected background mutability to identify potential drivers. To read more about the MutaGene's ranking method, read the publication
+
+Rank: Identifying potential driver mutations
+
+
+-----------
+Description
+-----------
+Use mutagene rank to analyze genes and compare observed mutational frequencies to expected background mutability to identify potential drivers.
+The publication provides more details about the MutaGene's ranking method 
 `Finding driver mutations in cancer: Elucidating the role of background mutational processes <https://doi.org/10.1371/journal.pcbi.1006981>`_
 
 *Note: if you installed MutaGene in a virtual environment, make sure you activate the virtual environment first.*
